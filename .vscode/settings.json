@@ -1,3 +1,18 @@
 {
-    "postman.settings.dotenv-detection-notification-visibility": false
+    "postman.settings.dotenv-detection-notification-visibility": false,
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "render.com",
+            "connectString": "postgresql://cse340:VJLr43kvELt9ro6cDqsNlUWcH8U5UFzi@dpg-d2uuld0gjchc73anbve0-a.ohio-postgres.render.com/cse340_mu8f"
+        }
+    ]
 }
