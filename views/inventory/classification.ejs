@@ -1,0 +1,12 @@
+<!-- Constructs the nav HTML content heading -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<!-- Constructs the message block -->
+<%# messages() %>
+
+<!-- Constructs the inventory items display -->
+<%- grid %>
