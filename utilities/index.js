@@ -60,6 +60,27 @@ Util.getNav = async function (req, res, next) {
 }
 
 
+/* **************************************
+* Build the details view HTML
+* ************************************ */
+Util.buildCarDetailsGrid = async function(data){
+  let grid = `
+  <img class='car-img' src='${data.inv_image}' alt='Image of ${data.inv_make} ${data.inv_model} on CSE Motors'>
+  <div class='details-box'>
+  <h2 class="car-name">${data.inv_make} ${data.inv_model} Details</h2>
+  <p class="price"><span>Price:</span> ${new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(data.inv_price)}</p>
+  <p class="miles"><span>Miles:</span> ${new Intl.NumberFormat("en-US").format(data.inv_miles)}</p>
+  <p class="description">${data.inv_description}</p>
+  <p class="color"><span>Color:</span> ${data.inv_color}</p>
+  </div>`
+
+  return grid
+}
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

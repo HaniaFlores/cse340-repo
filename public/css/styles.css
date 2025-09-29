@@ -173,6 +173,12 @@ footer {
   margin-top: 2rem;
   padding: 1rem; 
 }
+
+footer a {
+  text-decoration: underline;
+  color: #0b5bd3;
+  font-weight: bold;
+}
 .copyright {
   margin: 0;
   color: #666;
@@ -188,7 +194,7 @@ footer {
 .details-box { width: 100%; }
 .price span, .miles span, .color span, .details-view h1 { 
   font-weight: 700;
-  color: #188ab8;
+  color: #075470;
 }
 
 .form-display {
@@ -212,17 +218,68 @@ footer {
 
 /* ===== Inventory grid  ===== */
 #inv-display {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px; padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 20px;
 }
+
 #inv-display li {
-  list-style: none; display: flex; flex-direction: column; justify-content: center; align-items: center;
-  border: 2px solid #ccc;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .12s ease;
 }
-#inv-display img { max-width: 100%; height: auto; }
-.namePrice { text-align: center; }
-.namePrice h2 { margin: 0; }
-.namePrice span { font-weight: 700; }
+
+#inv-display li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+}
+
+#inv-display img {
+  width: 100%;
+  height: 170px;           
+  object-fit: cover;   
+  display: block;
+}
+
+.namePrice {
+  width: 100%;
+  padding: 14px 16px 18px;
+  text-align: center;
+  border-top: 3px solid #222;   
+}
+
+.namePrice h2 {
+  margin: 8px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.namePrice h2 a {
+  color: #0b5bd3;
+  text-decoration: underline;
+}
+
+.namePrice h2 a:hover,
+.namePrice h2 a:focus {
+  color: #0848a6;
+  text-decoration-thickness: 2px;
+}
+
+.namePrice span {
+  display: block;
+  margin-top: 4px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #333;
+}
 
 /* ===== Desktop (≥ 50rem) ===== */
 @media (min-width: 50rem) {
@@ -310,6 +367,31 @@ footer {
   .upgrades .upgrades-grid {
     grid-template-columns: repeat(2, 1fr);
     max-width: 32rem; 
+  }
+
+  /* ===== Car details view ===== */
+  .details-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .details-view h1 {
+    grid-column: 1/3;
+    grid-row: 1/2;
+  }
+
+  .car-img {
+    max-width: 90%; 
+    grid-row: 2/3;
+    grid-column: 1/2;
+  }
+
+  .details-box {
+    margin-left: 5%;
+    grid-row: 2/3;
+    grid-column: 2/3;
+    width: 95%;
   }
 
   footer {
