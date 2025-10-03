@@ -219,8 +219,8 @@ footer a {
 /* ===== Inventory grid  ===== */
 #inv-display {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
   padding: 20px;
 }
 
@@ -228,56 +228,86 @@ footer a {
   list-style: none;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 12px;
   background: #fff;
-  border: 1px solid #e2e2e2;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.08);
-  overflow: hidden;
-  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
 #inv-display li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-#inv-display img {
+#inv-display .img-container {
   width: 100%;
-  height: 170px;           
-  object-fit: cover;   
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+#inv-display .img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   display: block;
 }
 
-.namePrice {
+#inv-display li > a {
   width: 100%;
-  padding: 14px 16px 18px;
-  text-align: center;
-  border-top: 3px solid #222;   
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.namePrice h2 {
-  margin: 8px 0 10px;
-  font-size: 1.05rem;
+#inv-display li > a img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#inv-display .namePrice {
+  text-align: center;
+  padding: 12px;
+  width: 100%;
+  margin-top: auto;
+}
+
+#inv-display .namePrice h2 {
+  margin: 8px 0;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.namePrice h2 a {
+#inv-display .namePrice h2 a {
   color: #0b5bd3;
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: inherit;
+  transition: color .15s ease, text-decoration-thickness .15s ease;
 }
 
-.namePrice h2 a:hover,
-.namePrice h2 a:focus {
+#inv-display .namePrice h2 a:hover,
+#inv-display .namePrice h2 a:focus {
   color: #0848a6;
+  text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
-.namePrice span {
+#inv-display .namePrice span {
   display: block;
   margin-top: 4px;
-  font-weight: 600;
-  font-size: 1.15rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   color: #333;
 }
 

@@ -7,7 +7,7 @@ const Util = {}
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
-    grid = '<ul id="inv-display">'
+    grid = '<section class="classification-view"><ul id="inv-display">'
     data.forEach(vehicle => { 
       grid += '<li>'
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
@@ -27,7 +27,7 @@ Util.buildClassificationGrid = async function(data){
       grid += '</div>'
       grid += '</li>'
     })
-    grid += '</ul>'
+    grid += '</ul></section>'
   } else { 
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
