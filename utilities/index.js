@@ -80,6 +80,21 @@ Util.buildCarDetailsGrid = async function(data){
   return grid
 }
 
+/* ************************
+ * Constructs the select HTML for the classification list
+ ************************** */
+Util.classificationList = async function (selectedOption) {
+  const data = await invModel.getClassifications();
+  let options = '<option value="">Choose a classification</option>';
+    
+  data.rows.forEach(row => {
+  options += `<option value="${row.classification_id}" ${row.classification_id === Number(selectedOption) ? "selected" : ""}>
+  ${row.classification_name}
+  </option>`;
+  });
+    return options;
+};
+
 
 /* ****************************************
  * Middleware For Handling Errors
