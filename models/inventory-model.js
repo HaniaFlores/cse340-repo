@@ -55,38 +55,18 @@ async function addClassification(classification_name) {
   }
 }
 
-// /* **********************
-//  *   Check for existing classification
-//  * ********************* */
-// async function checkExistingClassification(classification_name){
-//   try {
-//     const sql = "SELECT * FROM classification WHERE classification_name = $1"
-//     const classification = await pool.query(sql, [classification_name])
-//     return classification.rowCount
-//   } catch (error) {
-//     return error.message
-//   }
-// }
-
-/* **********************
- *   Check for existing classification
- * ********************* */
 async function checkExistingClassification(classification_name) {
-  try {
-    const name = (classification_name || "").trim()
-    if (!name) return 0
+  const name = (classification_name ?? '').trim()
+  if (!name) return false
 
-    const sql = `
-      SELECT 1
-      FROM classification
-      WHERE LOWER(classification_name) = LOWER($1)
-      LIMIT 1
-    `
-    const classification = await pool.query(sql, [name])
-    return classification.rowCount
-  } catch (error) {
-    return error.message
-  }
+  const sql = `
+    SELECT 1
+    FROM public.classification
+    WHERE LOWER(TRIM(classification_name)) = LOWER(TRIM($1))
+    LIMIT 1
+  `
+  const { rowCount } = await pool.query(sql, [name])
+  return rowCount > 0
 }
 
 
