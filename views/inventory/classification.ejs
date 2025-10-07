@@ -6,7 +6,14 @@
 } %>
 
 <!-- Constructs the message block -->
-<%# messages() %>
+<%- messages() %>
+<% if (errors) { %>
+  <ul>
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+ <%  }) %>
+ </ul>
+<% } %>
 
 <!-- Constructs the inventory items display -->
 <%- grid %>
