@@ -41,9 +41,9 @@ router.post("/add-inventory", mngValidate.inventoryRules(), mngValidate.checkInv
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to build the "Edit Inventory" view
-router.get(
-  "/edit/:inventoryId",
-  utilities.handleErrors(invController.buildEditInventoryView)
-)
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditInventoryView))
+
+// Process the "Edit Inventory" data
+router.post("/update/", mngValidate.inventoryRules(), mngValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
 
 module.exports = router;

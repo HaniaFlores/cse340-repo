@@ -204,7 +204,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 }
 
 /* ***************************
- *  Build Edit Inventory View (prefilled fields)
+ *  Build Edit Inventory View
  * ************************** */
 invCont.buildEditInventoryView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inventoryId, 10)
@@ -241,6 +241,70 @@ invCont.buildEditInventoryView = async function (req, res, next) {
     inv_color: data.inv_color,
     classification_id: data.classification_id,
   })
+}
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  const nav = await utilities.getNav()
+
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+
+  const updateResult = await invModel.updateInventory(
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+
+  if (updateResult) {
+    const itemName = (updateResult.inv_make || inv_make) + " " + (updateResult.inv_model || inv_model)
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    return res.redirect("/inv/")
+  } else {
+    const classificationList = await utilities.classificationList(classification_id)
+    const itemName = `${inv_year} ${inv_make} ${inv_model}`
+
+    req.flash("notice", "Sorry, the update failed.")
+    return res.status(501).render("./inventory/edit-inventory", {
+      title: `Edit ${itemName}`,
+      nav,
+      errors: null,
+      classificationList,
+
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    })
+  }
 }
 
 module.exports = invCont

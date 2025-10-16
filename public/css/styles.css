@@ -311,7 +311,7 @@ footer a {
   color: #333;
 }
 
-/* ===== Inventory Management – Table Only ===== */
+/* ===== Inventory Management Table ===== */
 .mng-view { overflow-x: auto; }
 
 #inventoryDisplay {
@@ -376,6 +376,31 @@ footer a {
   background: #9b1c1c;
   box-shadow: 0 2px 6px rgba(201,50,50,.25);
   outline: none;
+}
+
+/* ===== Submit Button State Styles ===== */
+.form-display input[type="submit"]:disabled,
+.form-display button:disabled {
+  background: #c0c7cc;         
+  color: #f2f2f2;             
+  cursor: not-allowed;         
+  opacity: 0.7;                 
+  box-shadow: none;             
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.form-display input[type="submit"]:not(:disabled),
+.form-display button:not(:disabled) {
+  background: #075470;          
+  color: #fff;                  
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+}
+
+.form-display input[type="submit"]:not(:disabled):hover,
+.form-display button:not(:disabled):hover {
+  background: #147092;          
 }
 
 /* ===== Desktop (≥ 50rem) ===== */
