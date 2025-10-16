@@ -16,6 +16,7 @@ const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
+const reviewRoute = require("./routes/reviewRoute")
 const utilities = require("./utilities/")
 const bodyParser = require("body-parser")
 
@@ -64,6 +65,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", accountRoute)
+//Review route
+app.use("/reviews", reviewRoute)
 
 
 // File Not Found Route - must be last route in list

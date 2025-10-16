@@ -403,6 +403,50 @@ footer a {
   background: #147092;          
 }
 
+.form-display textarea {
+  width: 100%;           
+  box-sizing: border-box; 
+  padding: 10px;          
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;       
+}
+
+/* ===== Vehicle Reviews Section ===== */
+.reviews-section { margin-top: 1.25rem; }
+.reviews-section h2 { margin-bottom: .5rem; }
+
+.reviews-list { list-style: none; padding: 0; margin: .75rem 0; }
+.review-item { padding: .75rem 0; border-top: 1px solid #edf2f7; }
+.review-item:first-child { border-top: 0; }
+.review-head { font-size: .95rem; color: #075470; display: flex; gap: .5rem; align-items: baseline; }
+.review-rating { font-weight: 700; }
+.review-date { color: #666; font-size: .85rem; }
+.review-body { margin: .35rem 0 0; }
+
+.details-view { margin-bottom: 1rem; }
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: #e6edf3;
+  margin: 1.25rem 0 1.25rem;
+}
+
+.reviews-section,
+.review-form,
+.login-to-review { margin-bottom: 1.25rem; }
+
+.reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
 /* ===== Desktop (≥ 50rem) ===== */
 @media (min-width: 50rem) {
   body {
@@ -514,6 +558,24 @@ footer a {
     grid-row: 2/3;
     grid-column: 2/3;
     width: 95%;
+  }
+
+  .section-divider { margin: 1.5rem 0; }
+
+  .reviews-wrapper {
+    display: grid;
+    grid-template-columns: 1.7fr 1.3fr;
+    align-items: start;
+    gap: 1.5rem;
+  }
+
+  .reviews-section, 
+  .review-form {
+    margin: 0;
+  }
+
+  .review-form .form-display {
+    margin: 0; 
   }
 
   footer {

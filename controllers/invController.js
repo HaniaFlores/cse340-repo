@@ -24,16 +24,48 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build details view by inventory id
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-  const inventory_id = req.params.inventoryId
-  const data = await invModel.getDetailsByInventoryId(inventory_id)
-  const grid = await utilities.buildCarDetailsGrid(data)
-  let nav = await utilities.getNav()
-  const className = `${data.inv_year} ${data.inv_make} ${data.inv_model}`
-  res.render("./inventory/detail", {
-    title: className,
+  const invId = Number.parseInt(req.params.inventoryId, 10)
+  if (Number.isNaN(invId)) {
+    return next({ status: 400, message: "Invalid vehicle id." })
+  }
+
+  const item = await invModel.getDetailsByInventoryId(invId)
+  if (!item) {
+    return next({ status: 404, message: "Vehicle not found." })
+  }
+
+  const nav = await utilities.getNav()
+
+  let reviews = []
+  let ratingAvg = null
+  let ratingCount = 0
+
+  try {
+    const reviewModel = require("../models/review-model")
+    const [r, avg] = await Promise.all([
+      reviewModel.getReviewsForVehicle(invId),
+      reviewModel.getAverageRating(invId),
+    ])
+    reviews = r || []
+    ratingAvg = avg?.avg_rating ?? null
+    ratingCount = avg?.count ?? 0
+  } catch {
+    // Reviews not wired yet? Leave safe defaults.
+  }
+
+  const grid = await utilities.buildCarDetailsGrid(item)
+
+  return res.render("./inventory/detail", {
+    title: `${item.inv_year} ${item.inv_make} ${item.inv_model}`,
     nav,
     grid,
-    errors:null,
+    errors: null,
+    
+    item,
+    reviews,
+    ratingAvg,
+    ratingCount,
+    reviewDraft: {},
   })
 }
 
@@ -179,15 +211,6 @@ invCont.addInventory = async function(req, res){
 /* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
-// invCont.getInventoryJSON = async (req, res, next) => {
-//   const classification_id = parseInt(req.params.classification_id)
-//   const invData = await invModel.getInventoryByClassificationId(classification_id)
-//   if (invData[0].inv_id) {
-//     return res.json(invData)
-//   } else {
-//     next(new Error("No data returned"))
-//   }
-// }
 invCont.getInventoryJSON = async (req, res, next) => {
   try {
     const classification_id = parseInt(req.params.classification_id, 10)

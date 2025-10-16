@@ -1,16 +1,68 @@
-<!-- Content Heading -->
-<div class="details-view">
+<!-- Title -->
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-      res.redirect('/')
-} %>
+  <h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
 
-<!-- A Message Block -->
+<!-- Flash & Errors -->
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
 
-<%# messages() %>
+<!-- Vehicle grid -->
+<div class="details-view">
+  <%- grid %>
+</div>
 
-<!-- The Inventory Items Display -->
-<%- grid %>
+<hr class="section-divider">
 
+<!-- Reviews + Form Wrapper -->
+<div class="reviews-wrapper">
+  <!-- Reviews Section -->
+  <section class="reviews-section" aria-labelledby="reviews-heading">
+    <h2 id="reviews-heading">Reviews</h2>
+
+    <% if (typeof ratingAvg !== "undefined" && ratingCount > 0) { %>
+      <p><strong>Average rating:</strong> <%= ratingAvg %>/5 (<%= ratingCount %> review<%= ratingCount === 1 ? '' : 's' %>)</p>
+    <% } else { %>
+      <p>No reviews yet. Be the first!</p>
+    <% } %>
+
+    <% if (reviews && reviews.length) { %>
+      <ul class="reviews-list">
+        <% reviews.forEach(r => { %>
+          <li class="review-item">
+            <div class="review-head">
+              <strong><%= r.account_firstname %></strong>
+              <span class="review-rating">— <%= r.rating %>/5</span>
+              <span class="review-date"><%= new Date(r.created_at).toLocaleDateString() %></span>
+            </div>
+            <p class="review-body"><%= r.comment %></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </section>
+
+  <!-- Leave Review Form -->
+  <% if (locals.loggedin) { %>
+    <section class="review-form" aria-labelledby="leave-review-heading">
+      <h3 id="leave-review-heading">Leave a review</h3>
+      <form action="/reviews" method="post" class="form-display">
+        <input type="hidden" name="inv_id" value="<%= item ? item.inv_id : '' %>">
+        <label for="rating">Rating (1–5)</label>
+        <input type="number" id="rating" name="rating" min="1" max="5"
+               value="<%= (reviewDraft && reviewDraft.rating) ? reviewDraft.rating : '' %>" required>
+        <label for="comment">Comment</label>
+        <textarea id="comment" name="comment" rows="4" required><%= (reviewDraft && reviewDraft.comment) ? reviewDraft.comment : '' %></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+  <% } else { %>
+    <p class="login-to-review"><a href="/account/login">Log in</a> to leave a review.</p>
+  <% } %>
 </div>
