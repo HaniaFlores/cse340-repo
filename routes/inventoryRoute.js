@@ -46,4 +46,10 @@ router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditI
 // Process the "Edit Inventory" data
 router.post("/update/", mngValidate.inventoryRules(), mngValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
 
+// Route to build the "Delete Inventory" Confirmation view
+router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventoryView))
+
+// Process the "Delete Inventory" request
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
+
 module.exports = router;
