@@ -311,6 +311,73 @@ footer a {
   color: #333;
 }
 
+/* ===== Inventory Management – Table Only ===== */
+.mng-view { overflow-x: auto; }
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse; 
+  background: #fff;
+  border: 1px solid #e6edf3;           
+  border-radius: 10px;                   
+  overflow: hidden;                     
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  font-size: 0.95rem;                    
+}
+
+#inventoryDisplay thead th {
+  padding: 10px 14px;                    
+  text-align: left;
+  font-weight: 700;
+  color: #075470;                        
+  background: #f5fbff;                  
+  border-bottom: 2px solid #d8ecf6;
+}
+
+#inventoryDisplay tbody td {
+  padding: 10px 14px;                    
+  color: #222;
+  border-top: 1px solid #edf2f7;         
+  vertical-align: middle;
+}
+
+#inventoryDisplay tbody tr:nth-child(even) { background: #fbfdfe; }
+#inventoryDisplay tbody tr:hover        { background: #f1fbff; }
+
+#inventoryDisplay td a {
+  display: inline-block;
+  padding: 6px 10px;                   
+  line-height: 1;                        
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: .9rem;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+
+#inventoryDisplay td a[href*="edit"] {
+  background: #0079a8;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+#inventoryDisplay td a[href*="edit"]:hover,
+#inventoryDisplay td a[href*="edit"]:focus {
+  background: #005f87;
+  box-shadow: 0 2px 6px rgba(13,122,167,.25);
+  outline: none;
+}
+
+#inventoryDisplay td a[href*="delete"] {
+  background: #c53030; 
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+#inventoryDisplay td a[href*="delete"]:hover,
+#inventoryDisplay td a[href*="delete"]:focus {
+  background: #9b1c1c;
+  box-shadow: 0 2px 6px rgba(201,50,50,.25);
+  outline: none;
+}
+
 /* ===== Desktop (≥ 50rem) ===== */
 @media (min-width: 50rem) {
   body {
