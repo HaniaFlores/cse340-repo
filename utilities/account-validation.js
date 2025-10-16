@@ -73,6 +73,65 @@ validate.loginRules = () => {
   ]
 }
 
+/*  **********************************
+ *  Account Update Validation Rules
+ * ********************************* */
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        // If email unchanged, it's valid
+        const currentEmail = (req?.res?.locals?.accountData && req.res.locals.accountData.account_email) || null
+        if (currentEmail && currentEmail.toLowerCase() === account_email.toLowerCase()) {
+          return true
+        }
+        // Otherwise, ensure it doesn't exist on another account
+        const exists = await accountModel.checkExistingEmail(account_email)
+        if (exists) {
+          throw new Error("Email already exists.")
+        }
+        return true
+      }),
+  ]
+}
+
+/*  **********************************
+ *  Password Update Validation Rules
+ * ********************************* */
+validate.passwordUpdateRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password must be 12+ chars and include upper, lower, number, and special character."),
+  ]
+}
+
 
 /* ******************************
  * Check data and return errors or continue to registration
@@ -116,5 +175,44 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next();
 }; 
+
+/* ******************************
+ * Check data for Account Update (name/email) or return errors
+ * ***************************** */
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  let errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    return res.status(400).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+  }
+  next()
+}
+
+/* ******************************
+ * Check data for Password Update or return errors
+ * ***************************** */
+validate.checkPasswordUpdateData = async (req, res, next) => {
+  const { account_id } = req.body
+  let errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    return res.status(400).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      account_id,
+    })
+  }
+  next()
+}
 
 module.exports = validate
